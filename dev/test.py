@@ -14,11 +14,13 @@ def test() -> None:
     console.command(f"g++ -c test/main.cpp -o {tempDir}/main.o -std=c++23")
 
     console.command(f"g++ {tempDir}/main.o {buildDir}/coc.lib -o {staticDir}/test.exe {stdLib}")
-    path.relative.copy("test/main.coc", f"{staticDir}/main.coc")
+    path.relative.copy("test/math.coc", f"{staticDir}/math.coc")
+    path.relative.copy("test/my_struct.coc", f"{staticDir}/my_struct.coc")
 
     console.command(f"g++ {tempDir}/main.o {buildDir}/coc.dll -o {dynamicDir}/test.exe {stdLib}")
     path.copy(f"{buildDir}/coc.dll", f"{dynamicDir}/coc.dll")
-    path.relative.copy("test/main.coc", f"{dynamicDir}/main.coc")
+    path.relative.copy("test/math.coc", f"{dynamicDir}/math.coc")
+    path.relative.copy("test/my_struct.coc", f"{dynamicDir}/my_struct.coc")
 
     console.clear()
     path.change("dev/temp/static")

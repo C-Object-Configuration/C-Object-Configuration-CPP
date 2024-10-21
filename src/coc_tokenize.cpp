@@ -1,11 +1,11 @@
 #include "coc.hpp"
 
-coc::Struct::tokenizeValueCallback coc::Struct::tokenize(std::string_view data, int &index, std::string stringedType, std::string &key, std::vector<std::string> &values, bool(*hasValue)(std::string_view data, int &index, bool isArray, std::string &key, std::string &value)) {
+coc::Structure::tokenizeValueCallback coc::Structure::tokenize(std::string_view data, int &index, std::string stringedType, std::string &key, std::vector<std::string> &values, bool(*hasValue)(std::string_view data, int &index, bool isArray, std::string &key, std::string &value)) {
     if (!tokenizeType(data, index, stringedType) || !tokenizeKey(data, index, key)) return Fail;
     return tokenizeValue(data, index, key, values, hasValue);
 }
 
-bool coc::Struct::tokenizeType(std::string_view data, int &index, std::string &type) {
+bool coc::Structure::tokenizeType(std::string_view data, int &index, std::string &type) {
     switch (data[index-1]) {
         default: return false;
         case ' ':
@@ -25,7 +25,7 @@ bool coc::Struct::tokenizeType(std::string_view data, int &index, std::string &t
     return true;
 }
 
-bool coc::Struct::tokenizeKey(std::string_view data, int &index, std::string &key) {
+bool coc::Structure::tokenizeKey(std::string_view data, int &index, std::string &key) {
     do {
         if (data[index] == ' ') {
             if (!key.empty()) return true;
@@ -42,7 +42,7 @@ bool coc::Struct::tokenizeKey(std::string_view data, int &index, std::string &ke
     return false;
 }
 
-coc::Struct::tokenizeValueCallback coc::Struct::tokenizeValue(std::string_view data, int &index, std::string &key, std::vector<std::string> &values, bool(*hasValue)(std::string_view data, int &index, bool isArray, std::string &key, std::string &value)) {
+coc::Structure::tokenizeValueCallback coc::Structure::tokenizeValue(std::string_view data, int &index, std::string &key, std::vector<std::string> &values, bool(*hasValue)(std::string_view data, int &index, bool isArray, std::string &key, std::string &value)) {
     bool hasEqual = false;
 
     while (index++ < data.length()) {
@@ -70,7 +70,7 @@ coc::Struct::tokenizeValueCallback coc::Struct::tokenizeValue(std::string_view d
     parseSingle:
     values.emplace_back("");
     return hasValue(data, index, false, key, values[0])
-        ? Single
+        ? IsSingle
         : Fail
     ;
 
@@ -89,7 +89,7 @@ coc::Struct::tokenizeValueCallback coc::Struct::tokenizeValue(std::string_view d
             case ']': {
                 return hasComma
                     ? Fail
-                    : Array
+                    : IsArray
                 ;
             }
 

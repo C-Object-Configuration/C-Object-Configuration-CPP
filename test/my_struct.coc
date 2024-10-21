@@ -1,0 +1,5 @@
+int Foo = 42
+
+struct Bar = {
+    string Baz = "hello world"
+}

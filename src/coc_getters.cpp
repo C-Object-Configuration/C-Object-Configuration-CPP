@@ -1,21 +1,21 @@
 #include "coc.hpp"
 
 #define GETTER(type, name)                                                                      \
-std::optional<type> coc::Struct::name::Get(std::string_view key) {                              \
+std::optional<type> coc::Structure::name::Get(std::string_view key) {                           \
     if (!map.contains(key.data())) return {};                                                   \
     return map.at(key.data());                                                                  \
 }                                                                                               \
-std::optional<type> coc::Struct::name::operator[](std::string_view key) { return Get(key); }
+std::optional<type> coc::Structure::name::operator[](std::string_view key) { return Get(key); }
 
-#define GETTERS(type, name, arrayName)  \
+#define GETTERS(type, name)             \
 GETTER(type, name)                      \
-GETTER(std::vector<type>, arrayName)
+GETTER(std::vector<type>, Array::name)
 
-GETTERS(coc::Struct, Structs, StructArrays)
-GETTERS(bool, Bools, BoolArrays)
-GETTERS(char, Chars, CharArrays)
-GETTERS(int, Ints, IntArrays)
-GETTERS(long long int, Longs, LongArrays)
-GETTERS(float, Floats, FloatArrays)
-GETTERS(double, Doubles, DoubleArrays)
-GETTERS(std::string, Strings, StringArrays)
+GETTERS(coc::Structure, Struct)
+GETTERS(bool, Bool)
+GETTERS(char, Char)
+GETTERS(int, Int)
+GETTERS(long long int, Long)
+GETTERS(float, Float)
+GETTERS(double, Double)
+GETTERS(std::string, String)

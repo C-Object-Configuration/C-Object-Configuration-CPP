@@ -1,7 +1,7 @@
 #include "coc.hpp"
 #include <fstream>
 
-std::optional<coc::Struct> coc::Open(std::string path) {
+std::optional<coc::Structure> coc::Open(std::string path) {
     std::ifstream file;
     file.open(path);
     if (file.fail()) return {};
@@ -13,7 +13,7 @@ std::optional<coc::Struct> coc::Open(std::string path) {
         data += c;
     }
 
-    std::optional<coc::Struct> structure = coc::Load(data);
+    std::optional<coc::Structure> structure = coc::Load(data);
     return structure
         ? std::move(structure)
         : std::nullopt
