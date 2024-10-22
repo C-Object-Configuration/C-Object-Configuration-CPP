@@ -1,4 +1,4 @@
-# C Object Configuration (COC) | C++ Toolkit
+# C Object Configuration (COC) | C++
 A library for working with **.coc** files in C++.
 
 ## License
